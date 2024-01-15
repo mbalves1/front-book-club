@@ -50,7 +50,7 @@ const { postLogin, user } = useUserStore()
 const router = useRouter();
 
 definePageMeta({
-  layout: 'default'
+  layout: 'login'
 })
 
 const formRef = ref(null)

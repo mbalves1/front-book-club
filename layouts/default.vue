@@ -1,7 +1,14 @@
 <template>
   <v-app>
-    <v-main>
+    <div>
+      <HeaderNav></HeaderNav>
+    </div>
+    <div class="bg-green">
+      <HeaderContent></HeaderContent>
+    </div>
+
+    <div class="max-w-1200px mx-auto">
       <slot></slot>
-    </v-main>
+    </div>
   </v-app>
 </template>

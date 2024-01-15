@@ -14,7 +14,7 @@ export const useUserStore = defineStore('user', {
       try {
         const response = await postLogin(payload)
 
-        const token = JSON.stringify(response.user.token)
+        const token = response.user.token
         this.user.token = token
         if(token) {
           localStorage.setItem("token", token)

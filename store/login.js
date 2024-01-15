@@ -5,6 +5,7 @@ export const useUserStore = defineStore('user', {
   state: () => ({
     user: {
       token: null,
+      authenticated: false,
     },
     msgError: null
   }),
@@ -12,12 +13,13 @@ export const useUserStore = defineStore('user', {
     async postLogin(payload) {
       try {
         const response = await postLogin(payload)
-        console.log("responmse", response)
 
         const token = JSON.stringify(response.user.token)
         this.user.token = token
-
-        localStorage.setItem("token", token)
+        if(token) {
+          localStorage.setItem("token", token)
+          this.user.authenticated = true
+        }
 
         return response
       } catch (error) {

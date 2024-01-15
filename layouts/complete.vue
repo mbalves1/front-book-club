@@ -1,0 +1,10 @@
+<template>
+  <template>
+    <v-app>
+      <HeaderComponent></HeaderComponent>
+      <v-main>
+        <slot></slot>
+      </v-main>
+    </v-app>
+  </template>
+</template>

@@ -46,7 +46,8 @@
 </template>
 <script setup>
 
-const { postLogin } = useUserStore()
+const { postLogin, user } = useUserStore()
+const router = useRouter();
 
 definePageMeta({
   layout: 'default'
@@ -64,14 +65,18 @@ const showPassword = ref(false)
 
 const doLogin = async () => {
   const { valid } = await formRef.value.validate();
-  // const valid = await formRef.value.validate();
-  console.log("valid", valid)
   if (!valid) {
     return
   }
   try {
-    console.log(payload.value)
     await postLogin(payload.value)
+    const auth = await user.authenticated
+
+    if (auth) {
+      router.push({path: '/home'})
+    } else {
+      router.push({path: '/'})
+    }
   }catch(error) {
     console .error(error)
   }

@@ -27,7 +27,6 @@ export const useBooksStore = defineStore('book', {
         token: this.token,
         slug
       }
-      console.log(payload);
       try {
         const response = await getBookBySlug(payload)
         return response

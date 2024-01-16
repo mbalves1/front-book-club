@@ -12,13 +12,14 @@ export async function getAllBooks(payload) {
 }
 
 export async function getBookBySlug(payload) {
-  const response = await fetch(`${URL_BASE}books/${payload.slug}`, {
+  const response = await fetch(`${URL_BASE}books${payload.slug}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Token ${payload.token}`
     },
   });
+  console.log('pauload', response)
   const data = await response.json();
   return data;
 }

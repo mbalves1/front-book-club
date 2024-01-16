@@ -11,3 +11,15 @@ export async function postLogin(payload) {
   const data = await response.json();
   return data;
 }
+
+export async function getUserData(token) {
+  const response = await fetch(`${URL_BASE}user`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    },
+  });
+  const data = await response.json();
+  return data;
+}

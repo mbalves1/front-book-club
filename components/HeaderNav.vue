@@ -5,10 +5,19 @@
     </div>
     <div class="">
       <div class="flex justify-between">
-        <div class="mr-5">Home</div>
-        <div class="mr-5">Sign In</div>
-        <div class="mr-5">Sign Out</div>
+        <div class="mr-5 cursor-pointer" @click="goTo('home')">Feed</div>
+        <div class="mr-5 cursor-pointer" @click="goTo('home')">Create Group</div>
+        <div class="mr-5 cursor-pointer">Sign In</div>
+        <div class="mr-5 cursor-pointer">Sign Out</div>
       </div>
     </div>
   </div>
 </template>
+<script setup>
+const router = useRouter()
+
+const goTo = (params) => {
+  router.push({ path: `/${params}`})
+}
+
+</script>

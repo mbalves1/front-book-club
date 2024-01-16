@@ -42,7 +42,7 @@
       </v-window-item>
 
       <v-window-item value="forms">
-        <BookForms></BookForms>
+        <BookForms @redirect="redirect"></BookForms>
       </v-window-item>
     </v-window>
   </div>
@@ -78,5 +78,9 @@ const goToBook = async (slug) => {
   const response = await getBookBySlug(slug)
 
   router.push({path: `${slug}`})
+}
+
+const redirect = (item) => {
+  tab.value = item
 }
 </script>

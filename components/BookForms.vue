@@ -1,4 +1,25 @@
 <template>
+  <v-dialog v-model="openModalRedirect">
+    <v-card class="w-500px h-auto mx-auto">
+      <v-card-title class="headline grey lighten-2" primary-title>Gostaria de criar outro grupo ?</v-card-title>
+      <v-divider></v-divider>
+      <v-card-actions>
+        <v-btn
+          text="Não, ir para o feed"
+          variant="tonal"
+          class="w-49%"
+          @click="goTo('home')"
+        ></v-btn>
+        <v-btn
+          text="Sim, criar mais grupo"
+          variant="tonal"
+          color="blue"
+          class="w-49%"
+          @click.prevent="openModalRedirect = false"
+        ></v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
   <v-form ref="refForm" class="my-10">
     <v-row>
       <v-col cols="12" lg="4">
@@ -63,13 +84,14 @@
         variant="tonal"
         text="Criar grupo"
         @click.prevent="createBook"
-      ></v-btn>
+        ></v-btn>
       </v-col>
     </v-row>
   </v-form>
 </template>
 <script setup>
- const { postNewBook } = useBooksStore()
+const { postNewBook } = useBooksStore()
+const emit = defineEmits(['redirect'])
 
 const loading = ref(false)
 const newBook = ref({
@@ -78,6 +100,7 @@ const newBook = ref({
   description: '',
   bookcover: ''
 })
+const openModalRedirect = ref(false)
 
 const createBook = async () => {
   loading.value = true
@@ -89,10 +112,23 @@ const createBook = async () => {
   try {
     const resp = await postNewBook(books)
     loading.value = false
+    newBook.value = {
+      title: '',
+      author: '',
+      description: '',
+      bookcover: ''
+    }
+    openModalRedirect.value = true
     return resp
   } catch (error) {
     loading.value = false
     console.error(error);
   }
 }
+
+const goTo = () => {
+  openModalRedirect.value = false
+  emit('redirect', 'feed')
+}
+
 </script>

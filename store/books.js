@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { getAllBooks, getBookBySlug } from '../server/book-api'
+import { getAllBooks, getBookBySlug, postNewBook } from '../server/book-api'
 
 export const useBooksStore = defineStore('book', {
   state: () => ({
@@ -10,7 +10,7 @@ export const useBooksStore = defineStore('book', {
   actions: {
     getToken() {
       const token = localStorage.getItem('token')
-      return this.token = token
+      return token
     },
     async getAllBooks(payload) {
       try {
@@ -24,7 +24,7 @@ export const useBooksStore = defineStore('book', {
     async getBookBySlug(slug) {
       this.getToken()
       const payload = {
-        token: this.token,
+        token: this.getToken(),
         slug
       }
       try {
@@ -32,6 +32,20 @@ export const useBooksStore = defineStore('book', {
         return response
       } catch (error) {
         throw new Error('Error to get book');
+      }
+    },
+    async postNewBook(books) {
+      this.getToken()
+      const payload = {
+        token: this.getToken(),
+        body: books
+      }
+      try {
+        const response = await postNewBook(payload)
+        return response
+      } catch (error) {
+        console.error(error);
+        throw new Error('Error to create a book');
       }
     }
   }

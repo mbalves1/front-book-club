@@ -1,8 +1,8 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-  const { user } = useUserStore()
-  const auth = user.authenticated
-  const token = localStorage.getItem('token')
-  if (!token) {
-    return navigateTo('/')
+  if (process.client) { // Check for client-side execution
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return navigateTo('/');
+    }
   }
 })

@@ -5,8 +5,7 @@
     </div>
     <div class="">
       <div class="flex justify-between">
-        <div class="mr-5 cursor-pointer" @click="goTo('home')">Feed</div>
-        <div class="mr-5 cursor-pointer" @click="goTo('home')">Create Group</div>
+        <div class="mr-5 cursor-pointer" @click="goTo('home')">Home</div>
         <div class="mr-5 cursor-pointer">Sign In</div>
         <div class="mr-5 cursor-pointer">Sign Out</div>
       </div>

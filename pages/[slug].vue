@@ -90,13 +90,16 @@ onBeforeMount(async() => {
 const fetchDataBook = async () => {
   try {
     const response = await getBookBySlug(router.path)
-    book.value.image = response.book?.bookcover
-    book.value.title = response.book?.title
-    book.value.author = response.book?.author
-    book.value.content = response.book?.content
-    book.value.user.username = response.book?.admingroup.username
-    book.value.user.image = response.book?.admingroup.image
-    book.value.comments = response.book?.comments
+    book.value = {
+      image: response.book?.bookcover,
+      title: response.book?.title,
+      content: response.book?.content,
+      user: {
+        username: response.book?.admingroup.username,
+        image: response.book?.admingroup.image
+      },
+      comments: response.book?.comments
+    }
   } catch (error) {
     console.error(error);
   }

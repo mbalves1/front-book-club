@@ -1,6 +1,6 @@
 import { URL_BASE } from './url';
 
-export async function getAllBooks(payload) {
+export async function getAllBooks() {
   const response = await fetch(`${URL_BASE}books/feed`, {
     method: 'GET',
     headers: {
@@ -19,7 +19,19 @@ export async function getBookBySlug(payload) {
       'Authorization': `Token ${payload.token}`
     },
   });
-  console.log('pauload', response)
+  const data = await response.json();
+  return data;
+}
+
+export async function postNewBook(payload) {
+  const response = await fetch(`${URL_BASE}books`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${payload.token}`
+    },
+    body: JSON.stringify(payload.body),
+  });
   const data = await response.json();
   return data;
 }

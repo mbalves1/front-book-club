@@ -1,19 +1,42 @@
 <template>
   <div class="flex">
     <div v-if="isLoading"> ... carregando </div>
-    <div class="flex my-10">
-      <img :src="book.image" alt="">
-      <div class="ml-5">
-        <div class="text-2xl">{{ book.title }}</div>
-        <sub class="text-grey text-xl font-bold">{{ book.author }}</sub>
-        <div class="mt-4">
-          {{ book.content }}
+    <v-row class="s">
+      <v-col>
+        <div class="flex my-10">
+          <img :src="book.image" alt="">
+          <div class="ml-5">
+            <div class="text-2xl">{{ book.title }}</div>
+            <sub class="text-grey text-xl font-bold">{{ book.author }}</sub>
+            <div class="mt-4">
+              {{ book.content }}
+            </div>
+            <div class="mt-4">
+              Criador do grupo: {{ book.user.username }}
+            </div>
+          </div>
         </div>
-        <div class="mt-4">
-          Criador do grupo: {{ book.user.username }}
+      </v-col>
+      <v-col cols="12" lg="2" v-if="isAdminUser">
+        <div class="mt-10">
+          <!-- para deletar esse grupo, precisa deletar todos comentários -->
+          <v-btn
+            variant="text"
+            class="text-capitalize"
+            color="red"
+            @click="deleteGroup"
+            append-icon="mdi-delete"
+            >Deletar</v-btn>
+            <v-btn
+              :text="closeCommentsField ? 'Fechar comentário' : 'Abrir comentários'"
+              variant="text"
+              class="text-capitalize"
+              @click="closeComments"
+              :append-icon="closeCommentsField ? 'mdi-close' : 'mdi-send'"
+          ></v-btn>
         </div>
-      </div>
-    </div>
+      </v-col>
+    </v-row>
   </div>
   <div class="sm:w-1200px">
     <div v-for="(book, bx) in booksCommentNewArray" :key="bx">
@@ -29,7 +52,7 @@
       </div>
     </div>
   </div>
-  <div class="mb-10 mt-1">
+  <div class="mb-10 mt-1" v-if="closeCommentsField">
     <div class="">
       <div class="flex items-center">
         <img :src="userLogged.image || '/user.avif'" class="w-50px">
@@ -78,6 +101,8 @@ const book = ref({
   comments: []
 })
 const userLogged = ref({})
+const closeCommentsField = ref(true)
+const isAdminUser = ref(false)
 const comment = ref('')
 
 onBeforeMount(async() => {
@@ -131,4 +156,9 @@ const sendComment = async () => {
     console.error(error);
   }
 }
+
+const closeComments = () => {
+  closeCommentsField.value = !closeCommentsField.value
+}
+
 </script>

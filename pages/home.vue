@@ -75,8 +75,7 @@ const fecthDataBooks = async () => {
 }
 
 const goToBook = async (slug) => {
-  const response = await getBookBySlug(slug)
-
+  await getBookBySlug(slug)
   router.push({path: `${slug}`})
 }
 

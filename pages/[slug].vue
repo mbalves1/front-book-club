@@ -110,18 +110,23 @@ onBeforeMount(async() => {
   isLoading.value = false;
   const user = localStorage.getItem('user')
   userLogged.value = JSON.parse(user)
+  if (book.value.user.id === userLogged.value.id) {
+    isAdminUser.value = true
+  }
 })
 
 const fetchDataBook = async () => {
   try {
     const response = await getBookBySlug(router.path)
+
     book.value = {
       image: response.book?.bookcover,
       title: response.book?.title,
       content: response.book?.content,
       user: {
         username: response.book?.admingroup.username,
-        image: response.book?.admingroup.image
+        image: response.book?.admingroup.image,
+        id: response.book.admingroup.id
       },
       comments: response.book?.comments
     }
